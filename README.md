@@ -87,7 +87,7 @@ En este proyecto **se usa** [Ultralytics](https://docs.ultralytics.com/es/) **pa
 
 El **primer paso** es ***renombrar*** el archivo comprimido *a data.zip* y ***añadirlo*** a la *carpeta raíz* de nuestro proyecto, donde ***lo extraeremos***.
 
-El **siguiente paso** es *ejecutar* el código `train_val_split.py` para *dividir el dataset en train y validation*, al cual le tenemos que ***pasar como aprgumentos*** la *ruta de la carpeta generada al descomprimir data.zip* y el *porcentaje de datos que queremos en la carpeta de training* (sobre 1, ej: `0.8` ), este último es opcional porque se pone a *0.8 como defaultValue*. Este código se encuentra en la carpeta `/code`.
+El **siguiente paso** es *ejecutar* el código `train_val_split.py` para *dividir el dataset en train y validation*, al cual le tenemos que ***pasar como aprgumentos*** la *ruta de la carpeta generada al descomprimir data.zip* y el *porcentaje de datos que queremos en la carpeta de training* (sobre 1, ej: `0.8` ), este último es opcional porque se pone a *0.8 como defaultValue*. Este código se encuentra en la carpeta `/scripts`.
 
 ```bash
 
@@ -104,3 +104,31 @@ Después de esto, es **necesario instalar la librería de ultralytics** para pod
 pip install ultralytics
 
 ```
+
+Una vez instalada la librería de ultralytics, el siguiente paso es crear el archivo de configuración YAML de ultralytics, donde se ha de especificar la ubicación de los datos de entrenamiento y validación (carpetas train y validation)
+
+Para crear el archivo de configuración podemos ejecutar el código **genetate_yaml.py** ubicado en la carpeta `/scripts`. Y una vez ejecutado, nos generaría automáticamente un archivo data.yml similar a este:
+
+```yaml
+
+path: /content/data
+train: train/images
+val: validation/images
+nc: 1
+names:
+- Mug
+
+```
+
+Una vez disponemos del archivo YAML, podemos entrenar el modelo, pero antes de eso, es necesario instalar el resto de librerías necesarias:
+
+```bash
+
+# Instalación de las librerías necesarias
+pip install --upgrade torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu124
+
+```
+
+
+
+--> **POR TERMINAR** <--
