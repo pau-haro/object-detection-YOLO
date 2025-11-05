@@ -10,7 +10,6 @@ import sys
 import shutil
 import argparse
 
-
 '''
     Definición del parser para identificar argumentos de entrada del usuario
     para la división del conjunto de datos
@@ -36,20 +35,19 @@ train_percent = float(args.train_pct)
     --> El porcentaje de entrenamiento está por debajo del 1% o por encima del 99% (no tendría sentido)
 '''
 if not os.path.isdir(data_path):    ## Caso de no encontrar el directorio indicado por el usuario
-   print('Directorio especificado en --datapath no encontrado. Verifica que la ruta es correcta (y utiliza barras invertidas dobles si es un sistema en Windows) y prueba de nuevo.')
-   sys.exit(0)
+  print('Directorio especificado en --datapath no encontrado. Verifica que la ruta es correcta (y utiliza barras invertidas dobles si es un sistema en Windows) y prueba de nuevo.')
+  sys.exit(0)
 if train_percent < .01 or train_percent > 0.99:     ## Caso en el que el valor de training introducido no cumple con las condiciones indicadas
-   print('Entrada inválida para train_pct. Por favor, introduce un número entre .01 y .99.')
-   sys.exit(0)
+  print('Entrada inválida para train_pct. Por favor, introduce un número entre .01 y .99.')
+  sys.exit(0)
 val_percent = 1 - train_percent
 
 # Definición de la ruta del dataset de entrada
 input_image_path = os.path.join(data_path,'images')
 input_label_path = os.path.join(data_path,'labels')
 
-# Define paths to image and annotation folders
 # Ruta a las carpetas de las imágenes y archivos de anotación
-cwd = os.getcwd()
+cwd = os.getcwd()   # Obtiene el directorio actual de trabajo
 train_img_path = os.path.join(cwd,'../data/train/images')
 train_txt_path = os.path.join(cwd,'../data/train/labels')
 val_img_path = os.path.join(cwd,'../data/validation/images')
@@ -57,12 +55,11 @@ val_txt_path = os.path.join(cwd,'../data/validation/labels')
 
 # Crea los directorios si no existen
 for dir_path in [train_img_path, train_txt_path, val_img_path, val_txt_path]:
-   if not os.path.exists(dir_path):
-      os.makedirs(dir_path)
-      print(f'Carpeta creada en {dir_path}.')
+  if not os.path.exists(dir_path):
+    os.makedirs(dir_path)
+    print(f'Carpeta creada en {dir_path}.')
 
 # Obtenemos lista de todas las imágenes y archivos de anotación
-# Get list of all images and annotation files
 img_file_list = [path for path in Path(input_image_path).rglob('*')]
 txt_file_list = [path for path in Path(input_label_path).rglob('*')]
 
@@ -97,3 +94,7 @@ for i, set_num in enumerate([train_num, val_num]):
       #os.rename(txt_path,os.path.join(new_txt_path,txt_fn))
 
     img_file_list.remove(img_path)
+
+# Eliminar carpetas del dataset sin dividir --> Por aseo
+shutil.rmtree(os.path.join(cwd, '../data/images'))
+shutil.rmtree(os.path.join(cwd, '../data/labels'))
