@@ -115,7 +115,16 @@ python .\train_val_split.py --datapath="..\data" --train_pct=.9    # Ubicados en
 
 Una vez **instalada la librería de ultralytics**, el ***siguiente paso*** es *crear el archivo de configuración YAML* de ultralytics, donde se ha de *especificar la ubicación de los datos* de entrenamiento y validación (carpetas train y validation)
 
-Para crear el archivo de configuración podemos ejecutar el código **genetate_yaml.py** ubicado en la carpeta `/scripts`. Y una vez ejecutado, nos generaría automáticamente un archivo data.yml similar a este:
+Para crear el archivo de configuración podemos ejecutar el código **generate_yaml.py** ubicado en la carpeta `/scripts`. 
+
+```bash
+
+# Ubicados en la carpeta scripts (desde terminal)
+python generate_yaml.py
+
+```
+
+Y una vez ejecutado, nos generaría automáticamente un archivo data.yml similar a este:
 
 ```yaml
 
