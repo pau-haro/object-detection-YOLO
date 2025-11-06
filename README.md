@@ -4,7 +4,7 @@ Este proyecto tiene como objetivo **entrenar un modelo YOLO** (You Only Look Onc
 
 Se utiliza **Label Studio** para generar las anotaciones en formato YOLO y la librería **Ultralytics** para gestionar el entrenamiento y validación del modelo, permitiendo su ejecución tanto en **PC como en dispositivos embebidos** (como Raspberry Pi).  
 
-El propósito final es disponer de un **modelo funcional y adaptable**, capaz de reconocer objetos definidos por el usuario en distintos entornos, con un proceso de entrenamiento **reproducible, automatizado y optimizado** dentro de un entorno virtual controlado mediante **Anaconda**. 
+El propósito final es disponer una plantilla para un **modelo funcional y adaptable**, capaz de reconocer objetos definidos por el usuario en distintos entornos, con un proceso de entrenamiento **reproducible, automatizado y optimizado** dentro de un entorno virtual controlado mediante **Anaconda**. 
 
 ---
 
