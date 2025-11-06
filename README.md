@@ -87,25 +87,33 @@ En este proyecto **se usa** [Ultralytics](https://docs.ultralytics.com/es/) **pa
 
 El **primer paso** es ***renombrar*** el archivo comprimido *a data.zip* y ***añadirlo*** a la *carpeta raíz* de nuestro proyecto, donde ***lo extraeremos***.
 
+Después de esto, es **necesario instalar la librería de ultralytics y pytorch** para poder entrenar y utilizar nuestro modelo YOLO.
+
+```bash
+
+# Instalación de las librerías necesarias para entrenar el modelo
+
+# Ultralytics
+pip install ultralytics
+
+# torch, torchvision y torchaudio
+pip install --upgrade torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu124
+
+# Probamos a ver si se ha instalado correctamente
+python -c "import torch; print(torch.cuda.get_device_name(0))"
+
+```
+
 El **siguiente paso** es *ejecutar* el código `train_val_split.py` para *dividir el dataset en train y validation*, al cual le tenemos que ***pasar como aprgumentos*** la *ruta de la carpeta generada al descomprimir data.zip* y el *porcentaje de datos que queremos en la carpeta de training* (sobre 1, ej: `0.8` ), este último es opcional porque se pone a *0.8 como defaultValue*. Este código se encuentra en la carpeta `/scripts`.
 
 ```bash
 
 # División del conjunto
-python .\train_val_split.py --datapath="..\data" --train_pct=0.9    # Ubicados en la carpeta del script
+python .\train_val_split.py --datapath="..\data" --train_pct=.9    # Ubicados en la carpeta del script
 
 ```
 
-Después de esto, es **necesario instalar la librería de ultralytics** para poder entrenar nuestro modelo YOLO.
-
-```bash
-
-# Instalación de la librería
-pip install ultralytics
-
-```
-
-Una vez instalada la librería de ultralytics, el siguiente paso es crear el archivo de configuración YAML de ultralytics, donde se ha de especificar la ubicación de los datos de entrenamiento y validación (carpetas train y validation)
+Una vez **instalada la librería de ultralytics**, el ***siguiente paso*** es *crear el archivo de configuración YAML* de ultralytics, donde se ha de *especificar la ubicación de los datos* de entrenamiento y validación (carpetas train y validation)
 
 Para crear el archivo de configuración podemos ejecutar el código **genetate_yaml.py** ubicado en la carpeta `/scripts`. Y una vez ejecutado, nos generaría automáticamente un archivo data.yml similar a este:
 
@@ -120,15 +128,65 @@ names:
 
 ```
 
-Una vez disponemos del archivo YAML, podemos entrenar el modelo, pero antes de eso, es necesario instalar el resto de librerías necesarias:
+Una vez tenemos el archivo de configuración, el siguiente paso es ***entrenar el modelo***, para eso tenemos que *ejecutar el comando*:
 
 ```bash
 
-# Instalación de las librerías necesarias
-pip install --upgrade torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu124
+yolo detect train data=data.yaml model=yolo11s.pt epochs=60 imgsz=640
 
 ```
 
+Estos son los **principales parámetros** utilizados para entrenar el modelo YOLO:
+
+| Parámetro | Descripción |
+|------------|-------------|
+| `--data` | **Archivo de configuración YAML** que define las rutas de las imágenes de entrenamiento, validación y las clases. <br>Ejemplo: `data/custom_data.yaml`. |
+| `--epochs` | **Número de épocas de entrenamiento.** <br>Indica cuántas veces el modelo verá todo el conjunto de datos durante el entrenamiento. <br>Valores comunes: `50`, `100`, `200`, etc. |
+| `--imgsz` | **Tamaño (resolución) de las imágenes** utilizadas durante el entrenamiento. <br>Ejemplo: `640` o `416`. <br>Un valor mayor puede mejorar la precisión, pero aumenta el tiempo de entrenamiento. |
+| `--model` | **Modelo base YOLO** que se desea utilizar o ruta a un modelo personalizado. <br>Ejemplo: `yolov8n.pt`, `yolov8s.pt` o `runs/detect/train/weights/best.pt`. |
 
 
---> **POR TERMINAR** <--
+El ***modelo lo escogeríamos en base a las necesidades del entrenamiento*** y los resultados deseados, y podríamos escoger entre los siguientes modelos:
+
+![Modelos Yolo para usar](src/image-4.png)
+
+Una vez finalizado el entrenamiento, el siguiente paso es correr el modelo, esto lo haríamos ejecutando el código **yolo_detection.py** ubicado en la carpeta `scripts/`.
+
+```bash
+
+# Lo ejecuta en una webcam USB
+python yolo_detect.py --model=runs/detect/train/weights/best.pt --source=usb0  
+
+# Lo ejecuta sobre test_vid.mp4 a 1280x720 
+python yolo_detect.py --model=yolo11s.pt --source=test_vid.mp4 resolution=1280x720  
+
+```
+
+***El script acepta varios argumentos*** que *permiten personalizar la ejecución* del modelo YOLO según las necesidades del usuario:
+
+| Argumento | Descripción |
+|------------|-------------|
+| `--model` | **Ruta al modelo YOLO entrenado** (`.pt`). <br>Ejemplo: `runs/detect/train/weights/best.pt`. <br>Este archivo contiene los pesos del modelo que se utilizarán para la detección. |
+| `--source` | **Fuente de entrada** para la detección. Puede ser:<br>• Una imagen (`test.jpg`)<br>• Una carpeta con imágenes (`test_dir`)<br>• Un vídeo (`testvid.mp4`)<br>• Una cámara USB (`usb0`)<br>• Una cámara Raspberry Pi (`picamera0`). |
+| `--thresh` | **Umbral mínimo de confianza** para mostrar detecciones. <br>Valores entre `0.0` y `1.0` (por defecto `0.5`). <br>Cuanto más alto, menos detecciones se mostrarán (más estrictas). |
+| `--resolution` | **Resolución de salida del vídeo o ventana de inferencia**, en formato `AnchoxAlto` (por ejemplo `640x480`). <br>Si no se especifica, se usa la resolución de la fuente original. |
+| `--record` | **Guarda los resultados del vídeo o cámara** en un archivo (por defecto `demo1.avi`). <br>⚠️ Solo se puede usar si se especifica también `--resolution`. |
+
+---
+
+## 👨‍💻 **Autor**
+
+Proyecto desarrollado por **Pau Haro Acín** para **TSE Technology Solutions**
+
+📧 **Contacto:** [pau.haro@tsetechnology.com](mailto:pau.haro@tsetechnology.com)
+
+---
+
+## 🤝 **Créditos y uso**
+
+Si este trabajo te resulta útil en tus investigaciones, publicaciones o desarrollos,  
+por favor **menciona este repositorio** o incluye una referencia al autor. 🙌
+
+```text
+© 2025 [TSE Technology Solutions]. Todos los derechos reconocidos.
+Distribuido bajo MIT License.
