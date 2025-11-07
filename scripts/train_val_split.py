@@ -98,3 +98,10 @@ for i, set_num in enumerate([train_num, val_num]):
 # Eliminar carpetas del dataset sin dividir --> Por aseo
 shutil.rmtree(os.path.join(cwd, '../data/images'))
 shutil.rmtree(os.path.join(cwd, '../data/labels'))
+
+'''
+Autor: Pau Haro 
+Propietario: @TSE TECHNOLOGY SOLUTIONS
+
+Se permite el libre uso de este código, con mención al autor/es y propietario/s del mismo
+'''

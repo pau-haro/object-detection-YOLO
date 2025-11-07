@@ -246,3 +246,10 @@ elif source_type == 'picamera':
     cap.stop()
 if record: recorder.release()
 cv2.destroyAllWindows()
+
+'''
+Autor: Pau Haro 
+Propietario: @TSE TECHNOLOGY SOLUTIONS
+
+Se permite el libre uso de este código, con mención al autor/es y propietario/s del mismo
+'''

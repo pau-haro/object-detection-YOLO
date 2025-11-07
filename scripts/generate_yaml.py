@@ -49,3 +49,11 @@ create_data_yaml(path_to_classes_txt, path_to_data_yaml)    # Ejecuta la funció
 print('\nFile contents:\n')
 with open(path_to_data_yaml, 'r') as f:
     print(f.read())
+
+
+'''
+Autor: Pau Haro 
+Propietario: @TSE TECHNOLOGY SOLUTIONS
+
+Se permite el libre uso de este código, con mención al autor/es y propietario/s del mismo
+'''

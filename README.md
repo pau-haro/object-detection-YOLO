@@ -163,11 +163,14 @@ Una vez finalizado el entrenamiento, el siguiente paso es correr el modelo, esto
 
 ```bash
 
+# En --model hay que indicar la ubicación EN NUESTRO ORDENADOR en la que se enecuentra el modelo
+# Esta ubicación la conoceremos cuando se acabe de entrenar el modelo, nos saldrá indicado en el terminal.
+
 # Lo ejecuta en una webcam USB
-python yolo_detect.py --model=runs/detect/train/weights/best.pt --source=usb0  
+python yolo_detection.py --model=runs/detect/train/weights/best.pt --source=usb0  
 
 # Lo ejecuta sobre test_vid.mp4 a 1280x720 
-python yolo_detect.py --model=yolo11s.pt --source=test_vid.mp4 resolution=1280x720  
+python yolo_detection.py --model=yolo11s.pt --source=test_vid.mp4 resolution=1280x720  
 
 ```
 
