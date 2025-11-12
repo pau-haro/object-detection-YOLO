@@ -260,7 +260,7 @@ while True:
     avg_frame_rate = np.mean(frame_rate_buffer)
 
 with open("conteo.txt", "w") as f:
-    f.write("Nº de frames que ha aparecido personas: ", total_objects)
+    f.write(f"Nº de frames que ha aparecido personas: {total_objects}")
 
 # Clean up
 print(f'Average pipeline FPS: {avg_frame_rate:.2f}')
