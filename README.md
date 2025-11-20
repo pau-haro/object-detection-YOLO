@@ -45,6 +45,9 @@ conda deactivate
 
 ## ETIQUETADO DE LAS IMÁGENES
 
+Antes de etiquetar, si los datos vienen en forma de vídeos, se dispone de un script mediante el cual podemos transoformar los vídeos a imágenes, y podemos ajustar el número de fotogramas por segundo, este script se llama extract_frames.py, y podemos encontrarlo en la carpeta ```utils/``` en nuestro proyecto.
+
+
 Para el etiquetado de las imágenes utilizarmos una **herramienta** de python de **open source** que llamada ***label studio***, que se instalaría de la siguiente manera (como puede verse también en la [página oficial](https://labelstud.io/)):
 
 ```bash
