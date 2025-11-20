@@ -16,8 +16,6 @@ parser.add_argument('--model', help='Path to YOLO model file (example: "runs/det
 parser.add_argument('--source', help='Image source, can be image file ("test.jpg"), \
                     image folder ("test_dir"), video file ("testvid.mp4"), index of USB camera ("usb0"), or index of Picamera ("picamera0")', 
                     required=True)
-parser.add_argument('--thresh', help='Minimum confidence threshold for displaying detected objects (example: "0.4")',
-                    default=0.5)
 parser.add_argument('--resolution', help='Resolution in WxH to display inference results at (example: "640x480"), \
                     otherwise, match source resolution',
                     default=None)
@@ -128,7 +126,6 @@ avg_frame_rate = 0
 frame_rate_buffer = []
 fps_avg_len = 200
 img_count = 0
-total_objects = 0   # Contabilizamos el número de frames en los que detecta los objetos
 
 # Begin inference loop
 while True:
@@ -206,7 +203,6 @@ while True:
 
                 # Basic example: count the number of objects in the image
                 object_count = object_count + 1
-                total_objects = total_objects + 1 
         else:
             if conf > float(min_conf):
 
@@ -221,7 +217,6 @@ while True:
 
                 # Basic example: count the number of objects in the image
                 object_count = object_count + 1
-                total_objects = total_objects + 1
 
     # Calculate and draw framerate (if using video, USB, or Picamera source)
     if source_type == 'video' or source_type == 'usb' or source_type == 'picamera':
@@ -258,9 +253,6 @@ while True:
 
     # Calculate average FPS for past frames
     avg_frame_rate = np.mean(frame_rate_buffer)
-
-with open("conteo.txt", "w") as f:
-    f.write(f"Nº de frames que ha aparecido personas: {total_objects}")
 
 # Clean up
 print(f'Average pipeline FPS: {avg_frame_rate:.2f}')

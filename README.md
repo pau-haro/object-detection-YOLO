@@ -137,11 +137,10 @@ names:
 
 ```
 
-Una vez tenemos el archivo de configuración, el siguiente paso es ***entrenar el modelo***, para eso tenemos que *ejecutar el comando*:
+Una vez tenemos el archivo de configuración, el siguiente paso es ***entrenar el modelo***, para eso tenemos que *ejecutar el comando* (ubicados en la carpeta raíz del proyecto):
 
 ```bash
-
-yolo detect train data=data.yaml model=yolo11s.pt epochs=60 imgsz=640
+yolo detect train data=data/config/data.yaml model=yolo11x.pt epochs=150 imgsz=640 patience=20 project="../models" name=""
 
 ```
 
@@ -164,7 +163,7 @@ Una vez finalizado el entrenamiento, el siguiente paso es correr el modelo, esto
 ```bash
 
 # En --model hay que indicar la ubicación EN NUESTRO ORDENADOR en la que se enecuentra el modelo
-# Esta ubicación la conoceremos cuando se acabe de entrenar el modelo, nos saldrá indicado en el terminal.
+# Esta ubicación la conoceremos cuando se acabe de entrenar el modelo, nos saldrá indicado en el terminal. O en nuestro caso, ubicado en la carpeta models
 
 # Lo ejecuta en una webcam USB
 python yolo_detection.py --model=runs/detect/train/weights/best.pt --source=usb0  
@@ -180,7 +179,7 @@ python yolo_detection.py --model=yolo11s.pt --source=test_vid.mp4 resolution=128
 |------------|-------------|
 | `--model` | **Ruta al modelo YOLO entrenado** (`.pt`). <br>Ejemplo: `runs/detect/train/weights/best.pt`. <br>Este archivo contiene los pesos del modelo que se utilizarán para la detección. |
 | `--source` | **Fuente de entrada** para la detección. Puede ser:<br>• Una imagen (`test.jpg`)<br>• Una carpeta con imágenes (`test_dir`)<br>• Un vídeo (`testvid.mp4`)<br>• Una cámara USB (`usb0`)<br>• Una cámara Raspberry Pi (`picamera0`). |
-| `--thresh` | **Umbral mínimo de confianza** para mostrar detecciones. <br>Valores entre `0.0` y `1.0` (por defecto `0.5`). <br>Cuanto más alto, menos detecciones se mostrarán (más estrictas). |
+| `--min_conf` | **Umbral mínimo de confianza** para mostrar detecciones. <br>Valores entre `0.0` y `1.0` (por defecto `0.5`). <br>Cuanto más alto, menos detecciones se mostrarán (más estrictas). |
 | `--resolution` | **Resolución de salida del vídeo o ventana de inferencia**, en formato `AnchoxAlto` (por ejemplo `640x480`). <br>Si no se especifica, se usa la resolución de la fuente original. |
 | `--record` | **Guarda los resultados del vídeo o cámara** en un archivo (por defecto `demo1.avi`). <br>⚠️ Solo se puede usar si se especifica también `--resolution`. |
 
